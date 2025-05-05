@@ -4,7 +4,8 @@ module Tweeter
 
     # GET /accounts
     def index
-      @accounts = Account.all
+      # @newsletter = Newsletter.find(params[:newsletter_id])
+      # @accounts = Account.all
     end
 
     # GET /accounts/1

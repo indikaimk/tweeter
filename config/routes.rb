@@ -1,4 +1,9 @@
 Tweeter::Engine.routes.draw do
-  resources :accounts
-  resources :tweets
+  resources :newsletters do
+    resources :tweets, shallow: true
+    resources :accounts, shallow: true
+    resources :threads, shallow: true
+  end
+  
+
 end
