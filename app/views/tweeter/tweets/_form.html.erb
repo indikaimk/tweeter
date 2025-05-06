@@ -11,12 +11,14 @@
     </div>
   <% end %>
 
+  <div class="top-space-1">
+    <%= form.submit "Back to tweets" %>
+    <%= form.submit "Save" %>
+    <%= form.submit "Save and close" %>
+    <%= form.submit "Post to Twitter" %>
+  </div>
   <div>
     <%= form.label :content, style: "display: block" %>
     <%= form.textarea :content %>
-  </div>
-
-  <div>
-    <%= form.submit %>
   </div>
 <% end %>

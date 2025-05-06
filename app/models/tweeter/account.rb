@@ -1,6 +1,10 @@
 module Tweeter
   class Account < ApplicationRecord
     belongs_to :publisher, class_name: Tweeter.publisher_class.to_s
+    encrypts :api_key
+    encrypts :api_secret
+    encrypts :access_token
+    encrypts :access_token_secret
 
     # before_validation :set_publisher
 

@@ -1,9 +1,11 @@
 module Tweeter
-  class TweetsController < ApplicationController
+  class TweetsController < ::ApplicationController
+    layout "tweeter"
     before_action :set_tweet, only: %i[ show edit update destroy ]
 
     # GET /tweets
     def index
+      @publisher = Tweeter.publisher_class.find(params[:publisher_id])
       @tweets = Tweet.all
     end
 
@@ -14,6 +16,7 @@ module Tweeter
     # GET /tweets/new
     def new
       @tweet = Tweet.new
+
     end
 
     # GET /tweets/1/edit
@@ -25,8 +28,9 @@ module Tweeter
       @tweet = Tweet.new(tweet_params)
 
       if @tweet.save
-        redirect_to @tweet, notice: "Tweet was successfully created."
+        redirect_to edit_tweet_path @tweet, notice: "Tweet was successfully created."
       else
+        #todo
         render :new, status: :unprocessable_entity
       end
     end
@@ -50,11 +54,12 @@ module Tweeter
       # Use callbacks to share common setup or constraints between actions.
       def set_tweet
         @tweet = Tweet.find(params.expect(:id))
+        @publisher = @tweet.publisher
       end
 
       # Only allow a list of trusted parameters through.
       def tweet_params
-        params.expect(tweet: [ :content ])
+        params.expect(tweet: [ :content, :publisher_id ])
       end
   end
 end
