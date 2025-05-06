@@ -6,7 +6,7 @@ class CreateTweeterAccounts < ActiveRecord::Migration[8.0]
       t.string :api_key_secret
       t.string :access_token
       t.string :access_token_secret
-      t.integer :newsletter_id, index: true
+      t.integer :publisher_id, index: true
 
       t.timestamps
     end

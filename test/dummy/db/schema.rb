@@ -17,28 +17,28 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_04_074942) do
     t.string "api_key_secret"
     t.string "access_token"
     t.string "access_token_secret"
-    t.integer "newsletter_id"
+    t.integer "publisher_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["newsletter_id"], name: "index_tweeter_accounts_on_newsletter_id"
+    t.index ["publisher_id"], name: "index_tweeter_accounts_on_publisher_id"
   end
 
   create_table "tweeter_threads", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "account_id"
-    t.index ["account_id"], name: "index_tweeter_threads_on_account_id"
+    t.integer "publisher_id"
+    t.index ["publisher_id"], name: "index_tweeter_threads_on_publisher_id"
   end
 
   create_table "tweeter_tweets", force: :cascade do |t|
     t.text "content"
     t.datetime "published_at"
     t.integer "job_id", default: 0
-    t.integer "account_id"
+    t.integer "publisher_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "thread_id"
-    t.index ["account_id"], name: "index_tweeter_tweets_on_account_id"
+    t.index ["publisher_id"], name: "index_tweeter_tweets_on_publisher_id"
     t.index ["thread_id"], name: "index_tweeter_tweets_on_thread_id"
   end
 end

@@ -1,5 +1,6 @@
 module Tweeter
-  class AccountsController < ApplicationController
+  class AccountsController < ::ApplicationController
+    layout "tweeter"
     before_action :set_account, only: %i[ show edit update destroy ]
 
     # GET /accounts
@@ -10,11 +11,17 @@ module Tweeter
 
     # GET /accounts/1
     def show
+
     end
 
     # GET /accounts/new
     def new
+      @publisher = Tweeter.publisher_class.find(params[:publisher_id])
       @account = Account.new
+      @account.publisher = @publisher
+      if @account.save
+        redirect_to edit_account_path @account, notice: "Account was successfully created."
+      end
     end
 
     # GET /accounts/1/edit
