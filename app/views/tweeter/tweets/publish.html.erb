@@ -1,0 +1,19 @@
+<h1 class="l4-header top-space-1 bottom-space-1">You are going to post this to Twitter</h1>
+
+<div class="bottom-space-1">
+  <%= @tweet.content %>
+</div>
+
+<%= form_with(model: [@tweet]) do |form| %>
+
+  <div>
+    <%= form.label :published_at, "Schedule date" %>
+    <%= form.datetime_local_field :published_at %>
+  </div>
+  <div class="top-space-2 bottom-space-1">
+    
+    <%= form.submit "Post now" %>
+    <%= form.submit "Schedule" %>
+    <%= form.submit "Cancel" %>
+  </div>
+<% end %>

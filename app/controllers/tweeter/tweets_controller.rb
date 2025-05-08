@@ -1,7 +1,7 @@
 module Tweeter
   class TweetsController < ::ApplicationController
     layout "tweeter"
-    before_action :set_tweet, only: %i[ show edit update destroy ]
+    before_action :set_tweet, only: %i[ show edit update publish destroy ]
 
     # GET /tweets
     def index
@@ -37,11 +37,33 @@ module Tweeter
 
     # PATCH/PUT /tweets/1
     def update
+      # if @tweet.update(tweet_params)
+      #   redirect_to @tweet, notice: "Tweet was successfully updated.", status: :see_other
+      # else
+      #   render :edit, status: :unprocessable_entity
+      # end
       if @tweet.update(tweet_params)
-        redirect_to @tweet, notice: "Tweet was successfully updated.", status: :see_other
+        if params[:commit] == "Save"
+          redirect_to edit_tweet_path(@tweet), notice: "Saved at #{@tweet.updated_at}"
+        elsif params[:commit] == "Post to Twitter"
+          redirect_to publish_tweet_path
+        elsif params[:commit] == "Schedule" && @tweet.schedule_tweet
+          redirect_to tweet_path(@tweet), notice: "The tweet scheduled at #{@tweet.published_at}"
+        elsif params[:commit] == "Post now" && @tweet.post_now
+          redirect_to tweet_path(@tweet), notice: "CloudQubes is posting the tweet in the background"
+        elsif params[:commit] == "Unpublish"
+          redirect_to edit_tweet_path(@tweet)     
+        else # Cancel
+          redirect_to creator_tweets_path(status: "draft")
+        end
       else
         render :edit, status: :unprocessable_entity
       end
+  
+    end
+
+    def publish 
+      
     end
 
     # DELETE /tweets/1
@@ -59,7 +81,7 @@ module Tweeter
 
       # Only allow a list of trusted parameters through.
       def tweet_params
-        params.expect(tweet: [ :content, :publisher_id ])
+        params.expect(tweet: [ :content, :publisher_id, :published_at ])
       end
   end
 end

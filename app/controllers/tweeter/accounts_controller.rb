@@ -63,7 +63,7 @@ module Tweeter
 
       # Only allow a list of trusted parameters through.
       def account_params
-        params.expect(account: [ :username ])
+        params.expect(account: [ :username, :api_key, :api_key_secret, :access_token, :access_token_secret ])
       end
   end
 end
