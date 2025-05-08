@@ -6,6 +6,11 @@ module Tweeter
     encrypts :access_token
     encrypts :access_token_secret
 
+    def get_credentials_hash 
+      return { api_key: self.api_key, api_key_secret: self.api_key_secret, access_token: self.access_token, 
+              access_token_secret: self.access_token_secret }
+    end
+
     # before_validation :set_publisher
 
     # private

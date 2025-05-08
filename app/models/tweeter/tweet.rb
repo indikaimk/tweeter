@@ -8,7 +8,7 @@ module Tweeter
     scope :by_publised_at, -> { order( published_at: :asc) }
 
     def post_to_twitter 
-      x_credentials = self.user.twitter_account.get_credentials_hash
+      x_credentials = self.publisher.twitter_account.get_credentials_hash
       x_client = X::Client.new(**x_credentials)
       post = x_client.post("tweets", "{\"text\": #{self.content.dump}}")
       return post
