@@ -6,5 +6,6 @@
 <br>
 
 <div>
-  <%= link_to "Show this tweet", @tweet %> |
+  <%= button_to "Add another tweet", publisher_tweets_path(@tweet.publisher), params: {tweet: {publisher_id: @tweet.publisher, thread_id: @tweet.thread}}, method: :post %>
+  
 </div>

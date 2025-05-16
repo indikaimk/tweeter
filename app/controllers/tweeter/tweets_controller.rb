@@ -6,7 +6,18 @@ module Tweeter
     # GET /tweets
     def index
       @publisher = Tweeter.publisher_class.find(params[:publisher_id])
-      @tweets = Tweet.all
+      # @tweets = @publisher.tweets
+
+      if params[:status]
+        @selected = params[:status]
+        if @selected == "scheduled"
+          @tweets = @publisher.tweets.by_publised_at.where(status: @selected)
+        else
+          @tweets = @publisher.tweets.latest.where(status: @selected)
+        end
+      else
+        @tweets = @publisher.tweets.latest
+      end
     end
 
     # GET /tweets/1
@@ -26,12 +37,16 @@ module Tweeter
     # POST /tweets
     def create
       @tweet = Tweet.new(tweet_params)
-
+      puts @tweet
       if @tweet.save
-        redirect_to edit_tweet_path @tweet, notice: "Tweet was successfully created."
-      else
-        #todo
-        render :new, status: :unprocessable_entity
+        if @tweet.sequence > 1 # subsequent tweets belonging to a thread
+          render 'create'
+        else
+          redirect_to edit_tweet_path @tweet, notice: "Tweet was successfully created."
+        end
+      # else
+      #   #todo: Give an error response if could not create
+      #   render :new, status: :unprocessable_entity
       end
     end
 
@@ -54,7 +69,7 @@ module Tweeter
         elsif params[:commit] == "Unpublish"
           redirect_to edit_tweet_path(@tweet)     
         else # Cancel
-          redirect_to creator_tweets_path(status: "draft")
+          redirect_to publisher_tweets_path(@tweet.publisher, status: "draft")
         end
       else
         render :edit, status: :unprocessable_entity
@@ -81,7 +96,7 @@ module Tweeter
 
       # Only allow a list of trusted parameters through.
       def tweet_params
-        params.expect(tweet: [ :content, :publisher_id, :published_at ])
+        params.expect(tweet: [ :content, :publisher_id, :published_at, :thread_id ])
       end
   end
 end
