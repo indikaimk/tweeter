@@ -37,9 +37,10 @@ module Tweeter
     # POST /tweets
     def create
       @tweet = Tweet.new(tweet_params)
+      @publisher = @tweet.publisher
       puts @tweet
       if @tweet.save
-        if @tweet.sequence > 1 # subsequent tweets belonging to a thread
+        if @tweet.sequence > 1 # subsequent tweets belonging to  a thread
           render 'create'
         else
           redirect_to edit_tweet_path @tweet, notice: "Tweet was successfully created."
@@ -59,7 +60,8 @@ module Tweeter
       # end
       if @tweet.update(tweet_params)
         if params[:commit] == "Save"
-          redirect_to edit_tweet_path(@tweet), notice: "Saved at #{@tweet.updated_at}"
+          # redirect_to edit_tweet_path(@tweet), notice: "Saved at #{@tweet.updated_at}"
+          render 'show'
         elsif params[:commit] == "Post to Twitter"
           redirect_to publish_tweet_path
         elsif params[:commit] == "Schedule" && @tweet.schedule_tweet
@@ -83,8 +85,9 @@ module Tweeter
 
     # DELETE /tweets/1
     def destroy
+      @publisher = @tweet.publisher
       @tweet.destroy!
-      redirect_to tweets_path, notice: "Tweet was successfully destroyed.", status: :see_other
+      redirect_to publisher_tweets_path(@publisher), notice: "Tweet was successfully destroyed.", status: :see_other
     end
 
     private

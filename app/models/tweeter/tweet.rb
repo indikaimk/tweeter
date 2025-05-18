@@ -1,6 +1,6 @@
 module Tweeter
   class Tweet < ApplicationRecord
-    before_validation :create_thread_if_not_exist
+    before_validation :add_tweet_to_thread
 
     belongs_to :publisher, class_name: Tweeter.publisher_class.to_s
     belongs_to :thread
@@ -10,6 +10,7 @@ module Tweeter
     scope :latest, -> { order(updated_at: :desc) }
     scope :by_publised_at, -> { order( published_at: :asc) }
     scope :lead_tweet, -> { where(sequence: 1) }
+    scope :by_thread_sequence, -> { order(sequence: :asc) }
 
     def post_to_twitter 
       x_credentials = self.publisher.twitter_account.get_credentials_hash
@@ -38,10 +39,10 @@ module Tweeter
     end
 
     private
-      def create_thread_if_not_exist 
+      def add_tweet_to_thread 
         if self.thread
           self.sequence = self.thread.get_next_sequence_number
-        else
+        else # Create new thread, if thread does not exists.
           self.thread = Thread.create(publisher: self.publisher)
         end
         # self.thread = self.thread || Thread.create(publisher: self.publisher)

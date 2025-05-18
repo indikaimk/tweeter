@@ -1,7 +1,19 @@
 <% content_for :title, "Editing tweet" %>
 
+<div>
+  <%= form_with model: @tweet.thread do |form| %>
+    <%= form.submit "Post to Twitter" %>
+    
+  <% end %>
+</div>
 
-<%= render "form", tweet: @tweet %>
+<div id="threads">
+  <% @tweet.thread.tweets.by_thread_sequence.each do |tweet| %>
+    <%= turbo_frame_tag tweet do %>
+      <%= render "form", tweet: tweet %>
+    <% end %>  
+  <% end %>
+</div>
 
 <br>
 
