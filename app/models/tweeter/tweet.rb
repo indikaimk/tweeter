@@ -38,6 +38,14 @@ module Tweeter
       return true
     end
 
+    def is_lead_tweet? 
+      if self.sequence == 1
+        return true
+      else
+        return false
+      end
+    end
+
     private
       def add_tweet_to_thread 
         if self.thread

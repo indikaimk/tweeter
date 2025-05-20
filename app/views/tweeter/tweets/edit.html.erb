@@ -1,23 +1,20 @@
 <% content_for :title, "Editing tweet" %>
 
-<div>
-  <%= form_with model: @tweet.thread do |form| %>
-    <%= form.submit "Post to Twitter" %>
+
+
+
+  <div id="threads">
+    <% @tweet.thread.tweets.by_thread_sequence.each do |tweet| %>
+      <%= turbo_frame_tag tweet do %>
+        <%= render "form", tweet: tweet %>
+      <% end %>  
+    <% end %>
+  </div>
+
+  <br>
+
+  <div>
+    <%= button_to "Add another tweet", publisher_tweets_path(@tweet.publisher), params: {tweet: {publisher_id: @tweet.publisher, thread_id: @tweet.thread}}, method: :post %>
     
-  <% end %>
-</div>
+  </div>
 
-<div id="threads">
-  <% @tweet.thread.tweets.by_thread_sequence.each do |tweet| %>
-    <%= turbo_frame_tag tweet do %>
-      <%= render "form", tweet: tweet %>
-    <% end %>  
-  <% end %>
-</div>
-
-<br>
-
-<div>
-  <%= button_to "Add another tweet", publisher_tweets_path(@tweet.publisher), params: {tweet: {publisher_id: @tweet.publisher, thread_id: @tweet.thread}}, method: :post %>
-  
-</div>

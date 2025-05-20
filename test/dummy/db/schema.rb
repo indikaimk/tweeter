@@ -10,7 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_15_222617) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_19_233338) do
+  create_table "newsletters", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "tweeter_accounts", force: :cascade do |t|
     t.string "username"
     t.string "api_key"
@@ -27,6 +32,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_15_222617) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "publisher_id"
+    t.integer "job_id", default: 0
     t.index ["publisher_id"], name: "index_tweeter_threads_on_publisher_id"
   end
 

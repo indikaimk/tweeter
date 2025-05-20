@@ -12,10 +12,11 @@
   <% end %>
 
   <div class="top-space-1">
-    <%= form.submit "Back to tweets" %>
+
+    <% if tweet.is_lead_tweet? %>
+      <%= form.submit "Post to Twitter" %>
+    <% end %>
     <%= form.submit "Save" %>
-    <%= form.submit "Save and close" %>
-    <%= form.submit "Post to Twitter" %>
   </div>
   <div>
     <%= form.label :content, style: "display: block" %>

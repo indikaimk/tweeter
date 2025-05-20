@@ -1,0 +1,25 @@
+<%= turbo_frame_tag @thread do %>
+
+<h1 class="l4-header top-space-1 bottom-space-1">You are going to post this to Twitter</h1>
+
+<%= form_with(model: @thread) do |form| %>
+  <div class="top-space-2 bottom-space-1">
+    
+    <%= form.submit "Post now" %>
+    <%= form.submit "Schedule" %>
+    <%= form.submit "Cancel" %>
+  </div>
+
+  <div class="top-space-1">
+    <%= form.label :published_at, "Schedule date" %>
+    <%= form.datetime_local_field :published_at %>
+  </div>
+
+<% end %>
+
+<div class="top-space-1">
+  <% @thread.tweets.each do |tweet| %>
+    <%= render partial: "tweeter/tweets/tweet", locals: {tweet: tweet} %>
+  <% end %>
+</div>
+<% end %>
