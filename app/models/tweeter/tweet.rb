@@ -48,12 +48,12 @@ module Tweeter
 
     private
       def add_tweet_to_thread 
-        if self.thread
-          self.sequence = self.thread.get_next_sequence_number
-        else # Create new thread, if thread does not exists.
-          self.thread = Thread.create(publisher: self.publisher)
-        end
-        # self.thread = self.thread || Thread.create(publisher: self.publisher)
+        # if self.thread
+        #   self.sequence = self.thread.get_next_sequence_number
+        # else # Create new thread, if thread does not exists.
+        #   self.thread = Thread.create(publisher: self.publisher)
+        # end
+        self.thread = self.thread || Thread.create(publisher: self.publisher)
       end
 
   end

@@ -1,11 +1,17 @@
 module Tweeter
   class Thread < ApplicationRecord
     belongs_to :publisher, class_name: Tweeter.publisher_class.to_s
-    has_many :tweets
+    has_many :tweets # , before_add: :set_tweet_sequence
 
 
     def get_next_sequence_number 
       self.tweets.by_thread_sequence.last.sequence + 1
+    end
+
+    def set_tweet_sequence(tweet) 
+      # tweet.sequence = self.get_next_sequence_number
+      puts "------------------------------------"
+      tweet.update(sequence: self.get_next_sequence_number)
     end
 
     def publish_now 

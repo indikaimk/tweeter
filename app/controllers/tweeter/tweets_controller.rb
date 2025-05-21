@@ -13,7 +13,7 @@ module Tweeter
         if @selected == "scheduled"
           @tweets = @publisher.tweets.by_publised_at.where(status: @selected)
         else
-          @tweets = @publisher.tweets.latest.where(status: @selected)
+          @tweets = @publisher.tweets.lead_tweet.latest.where(status: @selected)
         end
       else
         @tweets = @publisher.tweets.latest
@@ -38,7 +38,10 @@ module Tweeter
     def create
       @tweet = Tweet.new(tweet_params)
       @publisher = @tweet.publisher
-      puts @tweet
+      if @tweet.thread 
+        @tweet.sequence = @tweet.thread.get_next_sequence_number
+      end
+      # puts @tweet
       if @tweet.save
         if @tweet.sequence > 1 # subsequent tweets belonging to  a thread
           render 'create'
@@ -57,8 +60,10 @@ module Tweeter
         if params[:commit] == "Save"
           # redirect_to edit_tweet_path(@tweet), notice: "Saved at #{@tweet.updated_at}"
           render 'show'
-        elsif params[:commit] == "Post to Twitter"
-          redirect_to publish_tweet_path(@tweet)
+        elsif params[:commit] == "Post to Twitter now"
+          # redirect_to publish_tweet_path(@tweet)
+        elsif params[:commit] == "Post to Twitter later"
+          
         else # Cancel
           redirect_to publisher_tweets_path(@tweet.publisher, status: "draft")
         end

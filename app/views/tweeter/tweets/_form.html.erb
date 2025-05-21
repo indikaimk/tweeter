@@ -14,7 +14,13 @@
   <div class="top-space-1">
 
     <% if tweet.is_lead_tweet? %>
-      <%= form.submit "Post to Twitter" %>
+      <%= form.submit "Post to Twitter now" %>
+      <%= form.submit "Post to Twitter later" %>
+
+      <div>
+        <%= form.label :published_at, "At" %>
+        <%= form.datetime_local_field :published_at %>
+      </div>
     <% end %>
     <%= form.submit "Save" %>
   </div>
