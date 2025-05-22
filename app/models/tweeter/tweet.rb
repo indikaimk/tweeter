@@ -29,7 +29,7 @@ module Tweeter
       end
     end
   
-    def post_now 
+    def publish_now 
       self.published_at = nil
       self.job_id += 1
       self.status = "scheduled"

@@ -6,12 +6,14 @@ module Tweeter
       tweet = args[0]
       job_id = args[1]
       if tweet.scheduled? && tweet.job_id == job_id
-        post = tweet.post_to_twitter
-        if post["data"]["id"]
-          tweet.tweet_id = post["data"]["id"]
-          tweet.status = "published"
-          tweet.published_at = DateTime.now
-          tweet.save
+        tweet.thread.tweets.each do |tweet_in_thread|
+          post = tweet_in_thread.post_to_twitter
+          if post["data"]["id"]
+            tweet_in_thread.tweet_id = post["data"]["id"]
+            tweet_in_thread.status = "published"
+            tweet_in_thread.published_at = DateTime.now
+            tweet_in_thread.save
+          end
         end
       end  
     end

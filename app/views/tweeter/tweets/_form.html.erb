@@ -11,20 +11,21 @@
     </div>
   <% end %>
 
-  <div class="top-space-1">
+  <div >
 
     <% if tweet.is_lead_tweet? %>
-      <%= form.submit "Post to Twitter now" %>
-      <%= form.submit "Post to Twitter later" %>
-
-      <div>
-        <%= form.label :published_at, "At" %>
+      <div class="bottom-space-1">
+        <%= form.label :published_at, "Publish at" %>
         <%= form.datetime_local_field :published_at %>
+      </div>
+      <div class="bottom-space-1">
+        <%= form.submit "Publish later" %>
+        <%= form.submit "Publish now" %>        
       </div>
     <% end %>
     <%= form.submit "Save" %>
   </div>
-  <div>
+  <div >
     <%= form.label :content, style: "display: block" %>
     <%= form.textarea :content, class: 'small-textarea-field-with-border' %>
   </div>

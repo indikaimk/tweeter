@@ -8,24 +8,24 @@ module Tweeter
       self.tweets.by_thread_sequence.last.sequence + 1
     end
 
-    def set_tweet_sequence(tweet) 
-      # tweet.sequence = self.get_next_sequence_number
-      puts "------------------------------------"
-      tweet.update(sequence: self.get_next_sequence_number)
-    end
+    # def set_tweet_sequence(tweet) 
+    #   # tweet.sequence = self.get_next_sequence_number
+    #   puts "------------------------------------"
+    #   tweet.update(sequence: self.get_next_sequence_number)
+    # end
 
-    def publish_now 
+    # def publish_now 
       
-    end
+    # end
 
-    def publish_later 
-      self.job_id += 1
-      if self.published_at 
-        self.status = "scheduled"
-        self.save
-        PostTweetJob.set(wait_until: self.published_at).perform_later(self, self.job_id)
-        return true
-      end      
-    end
+    # def publish_later 
+    #   self.job_id += 1
+    #   if self.published_at 
+    #     self.status = "scheduled"
+    #     self.save
+    #     PostTweetJob.set(wait_until: self.published_at).perform_later(self, self.job_id)
+    #     return true
+    #   end      
+    # end
   end
 end

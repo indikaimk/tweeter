@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_19_233338) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_22_130325) do
   create_table "newsletters", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -46,6 +46,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_19_233338) do
     t.integer "thread_id"
     t.integer "status", default: 0
     t.integer "sequence", default: 1
+    t.string "tweet_id"
     t.index ["publisher_id"], name: "index_tweeter_tweets_on_publisher_id"
     t.index ["thread_id"], name: "index_tweeter_tweets_on_thread_id"
   end

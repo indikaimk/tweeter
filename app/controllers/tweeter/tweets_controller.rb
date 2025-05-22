@@ -59,11 +59,13 @@ module Tweeter
       if @tweet.update(tweet_params)
         if params[:commit] == "Save"
           # redirect_to edit_tweet_path(@tweet), notice: "Saved at #{@tweet.updated_at}"
-          render 'show'
-        elsif params[:commit] == "Post to Twitter now"
-          # redirect_to publish_tweet_path(@tweet)
+          redirect_to tweet_path(@tweet)
+        elsif params[:commit] == "Publish now"
+          if @tweet.publish_now
+            redirect_to tweet_path(@tweet)
+          end
         elsif params[:commit] == "Post to Twitter later"
-          
+
         else # Cancel
           redirect_to publisher_tweets_path(@tweet.publisher, status: "draft")
         end
