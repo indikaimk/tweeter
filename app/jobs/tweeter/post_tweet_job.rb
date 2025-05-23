@@ -7,7 +7,10 @@ module Tweeter
       job_id = args[1]
       if tweet.scheduled? && tweet.job_id == job_id
         tweet.thread.tweets.each do |tweet_in_thread|
-          post = tweet_in_thread.post_to_twitter
+          reply_to_tweet_id = ""
+          post = tweet_in_thread.post_to_twitter(reply_to: reply_to_tweet_id)
+          puts "-------------------------"
+          puts post
           if post["data"]["id"]
             tweet_in_thread.tweet_id = post["data"]["id"]
             tweet_in_thread.status = "published"

@@ -1,6 +1,7 @@
 module Tweeter
   class Tweet < ApplicationRecord
     before_validation :add_tweet_to_thread
+    has_one_attached :image
 
     belongs_to :publisher, class_name: Tweeter.publisher_class.to_s
     belongs_to :thread
@@ -12,10 +13,23 @@ module Tweeter
     scope :lead_tweet, -> { where(sequence: 1) }
     scope :by_thread_sequence, -> { order(sequence: :asc) }
 
-    def post_to_twitter 
+    def post_to_twitter(reply_to: "")
       x_credentials = self.publisher.twitter_account.get_credentials_hash
       x_client = X::Client.new(**x_credentials)
-      post = x_client.post("tweets", "{\"text\": #{self.content.dump}}")
+      tweet_body = {text: self.content}
+      if self.image.representable?
+        media_category = "tweet_image" # other options are: dm_image or subtitles; for videos or GIFs use chunked_upload  
+        #Rails.error.handle do
+          self.image.open do |image_file|
+            media = ::X::MediaUploader.upload(client: x_client, file_path: image_file.path, media_category: media_category)
+            tweet_body[:media] = {media_ids: [media["media_id_string"]]}
+          end
+        #end
+      end
+      if !reply_to.empty?
+        tweet_body[:reply] = {in_reply_to_tweet_id: reply_to}
+      end
+      post = x_client.post("tweets", tweet_body.to_json)
       return post
     end
   
