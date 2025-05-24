@@ -29,6 +29,9 @@ module Tweeter
       if !reply_to.empty?
         tweet_body[:reply] = {in_reply_to_tweet_id: reply_to}
       end
+      # puts "---------------------------------------------"
+      # puts tweet_body
+      # puts reply_to
       post = x_client.post("tweets", tweet_body.to_json)
       return post
     end

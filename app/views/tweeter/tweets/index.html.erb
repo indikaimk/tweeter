@@ -1,8 +1,10 @@
-<p style="color: green"><%= notice %></p>
+<% if notice %>
+  <p style="color: green"><%= notice %></p>
+<% end %>
 
 <% content_for :title, "Tweets" %>
 <section>
-  <h1>Tweets</h1>
+
   
   <div id="tweets">
     <% @tweets.each do |tweet| %>

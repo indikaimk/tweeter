@@ -12,8 +12,8 @@ Tweeter::Engine.routes.draw do
   end
 
   resources :threads, only: [:show, :edit, :update, :destroy] do
-    member do
-      get "publish" #post to twitter settings
-    end
+    # member do
+    #   get "publish" #post to twitter settings
+    # end
   end
 end
