@@ -1,7 +1,23 @@
 <div id="<%= dom_id tweet %>">
-  <p>
-    <strong>Content:</strong>
+  <div>
     <%= tweet.content %>
-  </p>
+  </div>
+  <div class="top-space-point-5 meta-text">
+    <% if tweet.draft? %>
+      <p class="meta-text">Updated <%= time_ago_in_words tweet.updated_at %> ago</p>
+    <% elsif tweet.scheduled? %>
+      <% if tweet.published_at %>
+        <p class="meta-text">Will be posted at <%= tweet.published_at.strftime("%H:%M, %d %b, %Y") %></p>
+      <% else %>
+        <p class="meta-text">Cloudqubes is posting this tweet in the background.</p>
+      <% end %>
+    <% elsif tweet.failed? %>
+      <p class="meta-text">Sending failed.</p>
+    <% else %>
+      <% if tweet.published_at %>
+        <p class="meta-text">Posted to Twitter at <%= tweet.published_at.strftime("%H:%M, %d %b, %Y") %></p>
+      <% end %>
+    <% end %>
+  </div>
 
 </div>

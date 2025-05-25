@@ -1,7 +1,7 @@
 module Tweeter
   class Thread < ApplicationRecord
     belongs_to :publisher, class_name: Tweeter.publisher_class.to_s
-    has_many :tweets # , before_add: :set_tweet_sequence
+    has_many :tweets, dependent: :destroy # , before_add: :set_tweet_sequence
 
 
     def get_next_sequence_number 

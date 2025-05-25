@@ -82,8 +82,8 @@ module Tweeter
     # DELETE /tweets/1
     def destroy
       @publisher = @tweet.publisher
-      @tweet.destroy!
-      redirect_to publisher_tweets_path(@publisher), notice: "Tweet was successfully destroyed.", status: :see_other
+      @tweet.thread.destroy!
+      redirect_to publisher_tweets_path(@publisher, status: "draft"), notice: "Thread was successfully deleted.", status: :see_other
     end
 
     private

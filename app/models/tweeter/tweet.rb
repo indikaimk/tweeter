@@ -6,7 +6,7 @@ module Tweeter
     belongs_to :publisher, class_name: Tweeter.publisher_class.to_s
     belongs_to :thread
     
-    enum :status, draft: 0, scheduled: 1, published: 2
+    enum :status, draft: 0, scheduled: 1, published: 2, failed: 3
   
     scope :latest, -> { order(updated_at: :desc) }
     scope :by_publised_at, -> { order( published_at: :asc) }

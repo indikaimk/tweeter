@@ -4,14 +4,20 @@
 
 <% content_for :title, "Tweets" %>
 <section>
+  <%= button_to "New tweet", publisher_tweets_path(@publisher), params: {tweet: {publisher_id: @publisher}}, method: :post %>
 
-  
+</section>
+<section>
   <div id="tweets">
     <% @tweets.each do |tweet| %>
-      <%= render tweet %>
-      <p>
-        <%= link_to "Show this tweet", tweet %>
-      </p>
+      <div class="top-border bottom-space-point-5">
+        <%= render tweet %>
+        <div>
+          <%= link_to "Show", tweet %>
+          <%= link_to "Edit", edit_tweet_path(tweet) %>
+        </div>        
+      </div>
+
     <% end %>
   </div>
 </section>

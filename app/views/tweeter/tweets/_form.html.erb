@@ -12,21 +12,14 @@
   <% end %>
 
   <div >
-
-    <% if tweet.is_lead_tweet? %>
-      <div class="bottom-space-1">
-        <%= form.label :published_at, "Publish at" %>
-        <%= form.datetime_local_field :published_at %>
-      </div>
-      <div class="bottom-space-1">
-        <%= form.submit "Publish later" %>
-        <%= form.submit "Publish now" %>        
-      </div>
-    <% end %>
-    <%= form.submit "Save" %>
+    <%= form.label :content, style: "display: block" %>
+    <%= form.textarea :content, class: 'small-textarea-field-with-border',
+    data: {controller: "tweet-length", action: "input -> tweet-length#countTweetChars" } %>
+    <div class="status-bar">
+      <span id="char-count"></span>
+    </div>
   </div>
   <div >
-    <%= form.label :content, style: "display: block" %>
-    <%= form.textarea :content, class: 'small-textarea-field-with-border' %>
+    <%= form.submit "Save" %>
   </div>
 <% end %>
