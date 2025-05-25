@@ -1,10 +1,10 @@
 <div id="<%= dom_id tweet %>">
   <div>
-    <%= tweet.content %>
+    <%= tweet_content(tweet) %>
   </div>
   <div class="top-space-point-5 meta-text">
     <% if tweet.draft? %>
-      <p class="meta-text">Updated <%= time_ago_in_words tweet.updated_at %> ago</p>
+      Updated <%= time_ago_in_words tweet.updated_at %> ago
     <% elsif tweet.scheduled? %>
       <% if tweet.published_at %>
         <p class="meta-text">Will be posted at <%= tweet.published_at.strftime("%H:%M, %d %b, %Y") %></p>

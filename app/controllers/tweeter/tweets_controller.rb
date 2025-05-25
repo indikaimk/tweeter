@@ -46,7 +46,7 @@ module Tweeter
         if @tweet.sequence > 1 # subsequent tweets belonging to  a thread
           render 'create'
         else
-          redirect_to edit_tweet_path @tweet, notice: "Tweet was successfully created."
+          redirect_to tweet_path @tweet, notice: "Tweet was successfully created."
         end
       # else
       #   #todo: Give an error response if could not create
@@ -59,7 +59,8 @@ module Tweeter
       if @tweet.update(tweet_params)
         if params[:commit] == "Save"
           # redirect_to edit_tweet_path(@tweet), notice: "Saved at #{@tweet.updated_at}"
-          redirect_to tweet_path(@tweet)
+          # redirect_to tweet_path(@tweet)
+          render "update"
         elsif params[:commit] == "Publish now"
           if @tweet.publish_now
             redirect_to tweet_path(@tweet)

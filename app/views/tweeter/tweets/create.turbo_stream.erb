@@ -1,3 +1,5 @@
-<%= turbo_stream.append "thread" do %>
-  <%= render partial: "form", locals: { tweet: @tweet } %>
+<%= turbo_stream.append @tweet.thread do %>
+  <%= turbo_frame_tag @tweet do %>
+    <%= render partial: "form", locals: { tweet: @tweet } %>
+  <% end %>
 <% end %>
