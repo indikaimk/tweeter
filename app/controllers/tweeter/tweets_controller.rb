@@ -66,7 +66,11 @@ module Tweeter
             redirect_to tweet_path(@tweet)
           end
         elsif params[:commit] == "Post to Twitter later"
-
+          if @tweet.publish_later
+            redirect_to tweet_path(@tweet), notice: "Tweet scheduled for #{@tweet.published_at}"
+          else
+            render :edit, status: :unprocessable_entity
+          end
         else # Cancel
           redirect_to publisher_tweets_path(@tweet.publisher, status: "draft")
         end

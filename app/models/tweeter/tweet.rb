@@ -55,6 +55,17 @@ module Tweeter
       return true
     end
 
+    def publish_later
+      if self.published_at.nil?
+        self.published_at = Time.now + 5.minutes # default to 5 minutes from now
+      end
+      self.job_id += 1
+      self.status = "scheduled"
+      self.save
+      PostTweetJob.set(wait_until: self.published_at).perform_later(self, self.job_id)
+      return true 
+    end
+
     def is_lead_tweet? 
       if self.sequence == 1
         return true
