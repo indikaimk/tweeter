@@ -100,7 +100,7 @@ module Tweeter
 
       # Only allow a list of trusted parameters through.
       def tweet_params
-        params.expect(tweet: [ :content, :publisher_id, :published_at, :thread_id ])
+        params.expect(tweet: [ :content, :publisher_id, :published_at, :thread_id, :image ])
       end
   end
 end

@@ -19,7 +19,16 @@
       <span id="char-count"></span>
     </div>
   </div>
-  <div >
+  <div>
+    <%= form.label :image, style: "display: block" %>
+    <%= form.file_field :image, accept: "image/*", class: "file-input" %>
+    <% if tweet.image.representable? %>
+      <div class="image-preview">
+        <%= image_tag main_app.url_for(tweet.image), class: "mini-thumbnail" %>
+      </div>
+    <% end %>
+  </div>
+  <div>
     <%= form.submit "Save" %>
   </div>
 <% end %>
