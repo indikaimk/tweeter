@@ -65,7 +65,7 @@ module Tweeter
           if @tweet.publish_now
             redirect_to tweet_path(@tweet)
           end
-        elsif params[:commit] == "Post to Twitter later"
+        elsif params[:commit] == "Publish later"
           if @tweet.publish_later
             redirect_to tweet_path(@tweet), notice: "Tweet scheduled for #{@tweet.published_at}"
           else

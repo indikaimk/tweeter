@@ -1,6 +1,13 @@
-<div id="<%= dom_id tweet %>">
-  <div>
-    <%= tweet_content(tweet) %>
+<div>
+  <div class="flex-left">
+    <div>
+      <%= tweet_content(tweet) %>
+    </div>
+    <div>
+      <% if tweet.image.representable? %>
+        <%= image_tag main_app.url_for(tweet.image), class: "tweet-image-thumbnail" %>
+      <% end %>
+    </div>
   </div>
   <div class="top-space-point-5 meta-text">
     <% if tweet.draft? %>

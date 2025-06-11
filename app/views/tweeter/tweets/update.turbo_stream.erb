@@ -1,9 +1,10 @@
 <%= turbo_stream.replace @tweet do %>
-  <div class="top-border bottom-space-point-5">
-    <%= render partial: "tweet", locals: { tweet: @tweet } %>
-    <div>
-      <%= link_to "Edit", edit_tweet_path(@tweet) %>
-    </div>        
-  </div>
-  
+  <%= turbo_frame_tag @tweet do %>
+    <div class="top-border bottom-space-point-5">
+      <%= render partial: "tweet", locals: { tweet: @tweet } %>
+      <div>
+        <%= link_to "Edit", edit_tweet_path(@tweet) %>
+      </div>        
+    </div>
+  <% end %>
 <% end %>
