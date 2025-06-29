@@ -3,7 +3,7 @@ module Tweeter
 
     def tweet_content(tweet)
       if tweet.content && !tweet.content.empty?
-        return tweet.content
+        return simple_format tweet.content
       else
         return "Blank tweet"
       end

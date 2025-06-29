@@ -4,20 +4,32 @@
 
 <% content_for :title, "Tweets" %>
 <section >
-  <div class="top-space-point-5 bottom-space-point-5 flex-left">
-    <div>
-      <%= button_to "New tweet", publisher_tweets_path(@publisher), params: {tweet: {publisher_id: @publisher}}, method: :post %>
+  
+  <div class="">
+    <div class="bottom-space-point-5">
+      <div>
+        <%= button_to "Write tweet", publisher_tweets_path(@publisher), params: {tweet: {publisher_id: @publisher}}, method: :post, class: "create-button" %>
+      </div>      
     </div>
-    <div>
-      <%= link_to "Drafts", tweeter.publisher_tweets_path(@publisher, status: "draft") %>
+    <div class="top-space-point-5 bottom-space-point-5 flex-left-gap-point-5">
+      <div>
+        <%= link_to "Drafts", tweeter.publisher_tweets_path(@publisher, status: "draft"), class: class_names("tab", {selected_tab: @selected == "draft"}) %>
+      </div>
+      <div>
+        <%= link_to "scheduled", tweeter.publisher_tweets_path(@publisher, status: "scheduled"), class: class_names("tab", {selected_tab: @selected == "scheduled"}) %>
+      </div>
+      <div>
+        <%= link_to "Published", tweeter.publisher_tweets_path(@publisher, status: "published"), class: class_names("tab", {selected_tab: @selected == "published"}) %>
+      </div>
+      <div>
+        <%= link_to "Failed", tweeter.publisher_tweets_path(@publisher, status: "failed"), class: class_names("tab", {selected_tab: @selected == "failed"}) %>
+      </div>      
     </div>
-    <div>
-      <%= link_to "scheduled", tweeter.publisher_tweets_path(@publisher, status: "scheduled") %>
-    </div>
-    <div>
-      <%= link_to "Published", tweeter.publisher_tweets_path(@publisher, status: "published") %>
-    </div>
+
   </div>
+
+</section>
+
 
 </section>
 <section>

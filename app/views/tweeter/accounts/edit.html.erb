@@ -2,9 +2,8 @@
 
 <h1>Editing account</h1>
 
-<%= render "form", account: @account %>
+<%= render "form", model: @account, url: account_path(@account), account: @account %>
 
-<br>
 
 <div>
   <%= link_to "Show this account", @account %> |

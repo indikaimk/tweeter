@@ -7,7 +7,7 @@ module Tweeter
     def index
       @publisher = Tweeter.publisher_class.find(params[:publisher_id])
       # @tweets = @publisher.tweets
-
+      @selected = params[:status] #To apply the CSS to the selected tab
       if params[:status]
         @selected = params[:status]
         if @selected == "scheduled"

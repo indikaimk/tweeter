@@ -2,8 +2,7 @@
 
 <h1>New account</h1>
 
-<%= render "form", account: @account %>
-
+<%= render "form", model: [@account.publisher, @account], url: publisher_accounts_path(@account.publisher), account: @account %>
 
 
 
