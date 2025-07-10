@@ -1,4 +1,4 @@
-<%= turbo_stream.append @tweet.thread do %>
+<%= turbo_stream.after @previous_tweet do %>
   <%= turbo_frame_tag @tweet do %>
     <%= render partial: "form", locals: { tweet: @tweet } %>
   <% end %>

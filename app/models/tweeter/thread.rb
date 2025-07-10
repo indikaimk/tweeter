@@ -4,8 +4,23 @@ module Tweeter
     has_many :tweets, dependent: :destroy # , before_add: :set_tweet_sequence
 
 
-    def get_next_sequence_number 
-      self.tweets.by_thread_sequence.last.sequence + 1
+    # def get_last_sequence_number 
+    #   self.tweets.by_thread_sequence.last.sequence + 1
+    # end
+
+    def get_next_sequence_number(previous_tweet=nil)
+      if previous_tweet
+        # If a previous tweet is provided, update the sequence of tweets after that
+        thread_tweets = self.tweets.by_thread_sequence.where("sequence > ?", previous_tweet.sequence)
+        thread_tweets.each do |tweet|
+          tweet.sequence += 1
+          tweet.save
+        end
+        return previous_tweet.sequence + 1
+      else # no previous tweet provided
+        return self.tweets.by_thread_sequence.last.sequence + 1
+      end
+ 
     end
 
     # def set_tweet_sequence(tweet) 

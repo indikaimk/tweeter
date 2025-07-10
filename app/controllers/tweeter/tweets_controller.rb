@@ -7,9 +7,9 @@ module Tweeter
     def index
       @publisher = Tweeter.publisher_class.find(params[:publisher_id])
       # @tweets = @publisher.tweets
-      @selected = params[:status] #To apply the CSS to the selected tab
+      # @selected = params[:status] #To apply the CSS to the selected tab
       if params[:status]
-        @selected = params[:status]
+        @selected = params[:status] #To apply the CSS to the selected tab
         if @selected == "scheduled"
           @tweets = @publisher.tweets.by_publised_at.where(status: @selected)
         else
@@ -37,11 +37,13 @@ module Tweeter
     # POST /tweets
     def create
       @tweet = Tweet.new(tweet_params)
+      @previous_tweet = Tweet.find_by(id: params.dig(:previous_tweet_id)) || @tweet.thread.tweets.by_thread_sequence.last
       @publisher = @tweet.publisher
       if @tweet.thread 
-        @tweet.sequence = @tweet.thread.get_next_sequence_number
+        @tweet.sequence = @tweet.thread.get_next_sequence_number(@previous_tweet)
+        # @tweet.thread.update_sequence(@tweet, previous_tweet)
       end
-      # puts @tweet
+      
       if @tweet.save
         if @tweet.sequence > 1 # subsequent tweets belonging to  a thread
           render 'create'
