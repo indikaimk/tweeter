@@ -11,8 +11,7 @@
     </div>
   <% end %>
 
-  <div >
-    <%= form.label :content, style: "display: block" %>
+  <div class="top-border">
     <%= form.textarea :content, class: 'small-textarea-field-with-border',
     data: {controller: "tweet-length", action: "input -> tweet-length#countTweetChars" } %>
     <div class="status-bar">
@@ -29,6 +28,12 @@
     <% end %>
   </div>
   <div>
-    <%= form.submit "Save" %>
+    <%= form.submit "Save", class: 'grey-button' %>
   </div>
 <% end %>
+<div>
+  <%= button_to "Delete tweet", tweet, method: :delete, form: { data: { turbo_confirm: 'Delete tweet?',
+                                                                        turbo_confirm_confirm_label: "Yes, delete",
+                                                                        turbo_confirm_cancel_label: "No, go back" } },
+                                                        class: "danger-button" %>
+</div>

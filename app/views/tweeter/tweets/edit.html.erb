@@ -1,18 +1,11 @@
 <p style="color: green"><%= notice %></p>
 
-<% content_for :title, "Editing tweet" %>
 
 <%= turbo_frame_tag "thread" do %>
 
-    <% @tweet.thread.tweets.by_thread_sequence.each do |tweet| %>
-      <%= turbo_frame_tag tweet do %>
-        <%= render "form", tweet: tweet %>
+      <%= turbo_frame_tag @tweet do %>
+        <%= render "form", tweet: @tweet %>
       <% end %>  
-    <% end %>
 <% end %>
 
-
-  <div>
-    <%= button_to "Add another tweet", publisher_tweets_path(@tweet.publisher), params: {tweet: {publisher_id: @tweet.publisher, thread_id: @tweet.thread}}, method: :post %>
-  </div>
 

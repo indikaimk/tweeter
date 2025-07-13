@@ -37,9 +37,9 @@ module Tweeter
     # POST /tweets
     def create
       @tweet = Tweet.new(tweet_params)
-      @previous_tweet = Tweet.find_by(id: params.dig(:previous_tweet_id)) || @tweet.thread.tweets.by_thread_sequence.last
       @publisher = @tweet.publisher
       if @tweet.thread 
+        @previous_tweet = Tweet.find_by(id: params.dig(:previous_tweet_id)) || @tweet.thread.tweets.by_thread_sequence.last
         @tweet.sequence = @tweet.thread.get_next_sequence_number(@previous_tweet)
         # @tweet.thread.update_sequence(@tweet, previous_tweet)
       end
@@ -88,9 +88,7 @@ module Tweeter
 
     # DELETE /tweets/1
     def destroy
-      @publisher = @tweet.publisher
-      @tweet.thread.destroy!
-      redirect_to publisher_tweets_path(@publisher, status: "draft"), notice: "Thread was successfully deleted.", status: :see_other
+      @tweet.destroy!
     end
 
     private

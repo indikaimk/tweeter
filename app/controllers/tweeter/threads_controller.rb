@@ -1,7 +1,7 @@
 module Tweeter
   class ThreadsController < ::ApplicationController
     layout "tweeter"
-    before_action :set_thread, only: %i[ update publish ]
+    before_action :set_thread, only: %i[ update publish destroy ]
 
     def update 
       if @thread.update(thread_params)
@@ -16,6 +16,12 @@ module Tweeter
         else
           
         end
+      end
+    end
+
+    def destroy 
+      if @thread.destroy
+        redirect_to publisher_tweets_path(@publisher, status: "draft"), notice: "Thread was successfully deleted."
       end
     end
 

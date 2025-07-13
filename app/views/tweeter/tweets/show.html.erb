@@ -2,9 +2,13 @@
 
 
 <div class="bottom-space-1">
-  <%= button_to "Delete thread", @tweet, method: :delete, form: { data: { turbo_confirm: 'Delete entire thread?',
+  <div class="bottom-space-1">
+    <%= button_to "Delete thread", @tweet.thread, method: :delete, form: { data: { turbo_confirm: 'Delete entire thread?',
                                                                           turbo_confirm_confirm_label: "Yes, delete",
-                                                                          turbo_confirm_cancel_label: "No, go back" } } %>
+                                                                          turbo_confirm_cancel_label: "No, go back" } },
+                                                                  class: "danger-button" %>
+    
+  </div>
   <%= form_with model: @tweet do |form| %>
     <div class="bottom-space-1">
       <%= form.label :published_at, "Publish at" %>
@@ -22,14 +26,14 @@
   <% @tweet.thread.tweets.by_thread_sequence.each do |tweet| %>
     <%= turbo_frame_tag tweet do %>
       <div class="top-border bottom-space-point-5">
-
         <%= render tweet %>
-        <%= link_to "Edit", edit_tweet_path(@tweet) %>
+      </div>
+      <div class="flex-left-gap-point-5 bottom-space-point-5 top-space-point-5">
+        <%= link_to "Edit", edit_tweet_path(tweet), class: "grey-button-small" %>
+        <%= button_to "Add tweet below", publisher_tweets_path(tweet.publisher), params: {tweet: {publisher_id: tweet.publisher, thread_id: tweet.thread}, previous_tweet_id: tweet.id}, method: :post, class: "grey-button-small" %>
       </div>
     <% end %> 
-    <div>
-      <%= button_to "Add tweet below", publisher_tweets_path(@tweet.publisher), params: {tweet: {publisher_id: @tweet.publisher, thread_id: @tweet.thread}, previous_tweet_id: tweet.id}, method: :post %>
-    </div>
+
   <% end %>
 <% end %>
 
