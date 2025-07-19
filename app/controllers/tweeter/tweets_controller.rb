@@ -2,6 +2,8 @@ module Tweeter
   class TweetsController < ::ApplicationController
     layout "tweeter"
     before_action :set_tweet, only: %i[ show edit update publish destroy ]
+    around_action :switch_time_zone, only: %i[ edit update publish index show ]
+
 
     # GET /tweets
     def index
